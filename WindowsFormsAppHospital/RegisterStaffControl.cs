@@ -44,8 +44,6 @@ namespace WindowsFormsAppHospital
             {
                 MessageBox.Show("Staff age is not valid!", "Invalid age!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                this.Visible = false;
             }
 
             else

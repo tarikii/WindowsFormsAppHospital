@@ -193,6 +193,13 @@ namespace WindowsFormsAppHospital
                 listPatientsControl = null;
             }
 
+            if (removePatientControl != null)
+            {
+                this.Controls.Remove(removePatientControl);
+                removePatientControl.Dispose();
+                removePatientControl = null;
+            }
+
             if (listPersonsControl != null)
             {
                 this.Controls.Remove(listPersonsControl);

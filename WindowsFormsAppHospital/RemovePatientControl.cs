@@ -16,6 +16,13 @@ namespace WindowsFormsAppHospital
         public RemovePatientControl(List<Person> persons)
         {
             InitializeComponent();
+            foreach (Person person in persons)
+            {
+                if (person.GetType() == typeof(Patient))
+                {
+                    listPatientsComboBox.Items.Add(person.Name);
+                }
+            }
             this.persons = persons;
         }
 
@@ -26,7 +33,7 @@ namespace WindowsFormsAppHospital
 
         private void butRemovePatient_Click(object sender, EventArgs e)
         {
-            string namePatient = namePatientTextBox.Text;
+            string namePatient = listPatientsComboBox.SelectedItem.ToString();
             bool patientFound = false;
 
             for (int i = persons.Count - 1; i >= 0; i--)

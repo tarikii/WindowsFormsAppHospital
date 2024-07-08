@@ -17,6 +17,13 @@ namespace WindowsFormsAppHospital
         public RegisterPatientControl(List<Person> persons)
         {
             InitializeComponent();
+            foreach (Person person in persons)
+            {
+                if (person.GetType() == typeof(Doctor))
+                {
+                    listDoctorsComboBox.Items.Add(person.Name);
+                }
+            }
             this.persons = persons;
         }
 
@@ -43,20 +50,16 @@ namespace WindowsFormsAppHospital
 
                 this.Visible = false;
             }
-
             else
             {
-                string doctorName = doctorAssignedTextBox.Text;
+                string doctorName = listDoctorsComboBox.SelectedItem.ToString();
                 Doctor assignedDoctor = persons.OfType<Doctor>().FirstOrDefault(d => d.Name == doctorName);
 
                 if (assignedDoctor == null)
                 {
                     MessageBox.Show("Doctor not found!", "Info not found",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    this.Visible = false;
                 }
-
                 else
                 {
                     Patient patient = new Patient(namePatient, agePatient, illness, assignedDoctor);
