@@ -27,18 +27,34 @@ namespace WindowsFormsAppHospital
 
         private void butSubmitDoctor_Click(object sender, EventArgs e)
         {
+            int ageDoctor;
+            bool tryParse;
+
             string nameDoctor = nameDoctorTextBox.Text;
-            int ageDoctor = int.Parse(ageDoctorTextBox.Text);
+            string ageDoctorText = ageDoctorTextBox.Text;
             string specialField = specialFieldTextBox.Text;
 
-            Doctor doctor = new Doctor(nameDoctor, ageDoctor, specialField);
+            tryParse = int.TryParse(ageDoctorText, out ageDoctor);
 
-            persons.Add(doctor);
+            if (!tryParse)
+            {
+                MessageBox.Show("Doctor age is not valid!", "Invalid age!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            MessageBox.Show("Doctor created successfully!", "Doctor registered",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Visible = false;
+            }
 
-            this.Visible = false;
+            else
+            {
+                Doctor doctor = new Doctor(nameDoctor, ageDoctor, specialField);
+
+                persons.Add(doctor);
+
+                MessageBox.Show("Doctor created successfully!", "Doctor registered",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.Visible = false;
+            }
         }
     }
 }

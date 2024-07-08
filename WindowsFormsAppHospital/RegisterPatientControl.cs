@@ -27,32 +27,48 @@ namespace WindowsFormsAppHospital
 
         private void butSubmitPatient_Click(object sender, EventArgs e)
         {
+            int agePatient;
+            bool tryParse;
+
             string namePatient = namePatientTextBox.Text;
-            int agePatient = int.Parse(agePatientTextBox.Text);
+            string agePatientText = agePatientTextBox.Text;
             string illness = illnessTextBox.Text;
 
-            string doctorName = doctorAssignedTextBox.Text;
-            Doctor assignedDoctor = persons.OfType<Doctor>().FirstOrDefault(d => d.Name == doctorName);
+            tryParse = int.TryParse(agePatientText, out agePatient);
 
-            if (assignedDoctor == null)
+            if (!tryParse)
             {
-                MessageBox.Show("Doctor not found!", "Info not found",
-                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Patient age is not valid!", "Invalid age!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 this.Visible = false;
             }
 
             else
             {
-                Patient patient = new Patient(namePatient, agePatient, illness, assignedDoctor);
+                string doctorName = doctorAssignedTextBox.Text;
+                Doctor assignedDoctor = persons.OfType<Doctor>().FirstOrDefault(d => d.Name == doctorName);
 
-                persons.Add(patient);
+                if (assignedDoctor == null)
+                {
+                    MessageBox.Show("Doctor not found!", "Info not found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                MessageBox.Show("Patient created successfully!", "Patient registered",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Visible = false;
+                }
 
-                this.Visible = false;
-            }     
+                else
+                {
+                    Patient patient = new Patient(namePatient, agePatient, illness, assignedDoctor);
+
+                    persons.Add(patient);
+
+                    MessageBox.Show("Patient created successfully!", "Patient registered",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Visible = false;
+                }
+            }
         }
     }
 }

@@ -31,18 +31,34 @@ namespace WindowsFormsAppHospital
 
         private void butSubmitStaff_Click(object sender, EventArgs e)
         {
+            int ageStaff;
+            bool tryParse;
+
             string nameStaff = nameStaffTextBox.Text;
-            int ageStaff = int.Parse(ageStaffTextBox.Text);
+            string ageStaffText = ageStaffTextBox.Text;
             string department = departmentTextBox.Text;
 
-            Staff staff = new Staff(nameStaff, ageStaff, department);
+            tryParse = int.TryParse(ageStaffText, out ageStaff);
 
-            persons.Add(staff);
+            if (!tryParse)
+            {
+                MessageBox.Show("Staff age is not valid!", "Invalid age!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            MessageBox.Show("Staff created successfully!", "Staff registered",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Visible = false;
+            }
 
-            this.Visible = false;
+            else
+            {
+                Staff staff = new Staff(nameStaff, ageStaff, department);
+
+                persons.Add(staff);
+
+                MessageBox.Show("Staff created successfully!", "Staff registered",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                this.Visible = false;
+            }
         }
     }
 }
